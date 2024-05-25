@@ -1,3 +1,5 @@
-Makefile.conf
 build-*
 *.patch
+*.iso
+iso_root
+limine
