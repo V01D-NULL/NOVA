@@ -3,3 +3,6 @@ build-*
 *.iso
 iso_root
 limine
+*.o
+*.elf
+ovmf

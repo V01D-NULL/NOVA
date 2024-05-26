@@ -1,3 +1,3 @@
-### Nova on limine
+### Eclipse System Bridge
 
-Pretty straightforward. Boots the nova microhypervisor on limine using multiboot
+The Eclipse System Bridge (ESB) acts as the intermediary layer between the NOVA hypervisor and the Moon microkernel. It ensures seamless communication, allowing the Moon microkernel to run securely within a Trusted Execution Environment (TEE). 
