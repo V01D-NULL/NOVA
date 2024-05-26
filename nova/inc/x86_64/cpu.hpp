@@ -260,7 +260,7 @@ class Cpu final
 
         static inline State_sys const hst_sys
         {
-            .star  = static_cast<uint64_t>(SEL_KERN_DATA) << 48 | static_cast<uint64_t>(SEL_KERN_CODE) << 32,
+            .star  = static_cast<uint64_t>(SEL_KERN_DATA | 3) << 48 | static_cast<uint64_t>(SEL_KERN_CODE) << 32,
             .lstar = reinterpret_cast<uintptr_t>(&entry_sys),
             .fmask = RFL_VIP | RFL_VIF | RFL_AC | RFL_VM | RFL_RF | RFL_NT | RFL_IOPL | RFL_DF | RFL_IF | RFL_TF,
             .kernel_gs_base = 0,
