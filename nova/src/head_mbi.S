@@ -23,19 +23,26 @@
 #include "multiboot.hpp"
 
 .section .head
-                        .balign 8
+.balign 8
+.Lmb2:  .long   MULTIBOOT_V2_HEADER
+        .long   0                  # Architecture (i386)
+        .long   .Lmb1 - .Lmb2
+        .long -(.Lmb1 - .Lmb2) - MULTIBOOT_V2_HEADER
 
-.Lmb2:                  .long   MULTIBOOT_V2_HEADER
-                        .long   0
-                        .long   .Lmb1 - .Lmb2
-                        .long -(.Lmb1 - .Lmb2) - MULTIBOOT_V2_HEADER
-                        .quad   0x0000000800000006
-                        .quad   0x0000000800000007
-                        .quad   0x000000180000000a
-                        .quad   0xffffffff00200000
-                        .quad   0x0000000200200000
-                        .quad   0x0000000800000000
-
-.Lmb1:                  .long   MULTIBOOT_V1_HEADER
-                        .long   BIT (0)
-                        .long  -BIT (0) - MULTIBOOT_V1_HEADER
+        .quad   0x0000000800000006 # Alignment tag
+        .quad   0x0000000800000007 # EFI boot services tag
+        .quad   0x000000180000000a # Relocatable header tag
+        .quad   0xffffffff00200000 # Relocatable header tag
+        .quad   0x0000000200200000 # Relocatable header tag
+        .balign 8
+        framebuffer_tag_start:
+            .short 5                                         #     ; type
+            .short 1                                          #    ; flags
+            .word framebuffer_tag_end - framebuffer_tag_start  #  ; size
+            .word 800                                          #  ; width
+            .word 600                                          #  ; height
+            .word 32                                           #  ; depth
+        framebuffer_tag_end:
+        .balign 8
+        .quad   0x0000000800000000 # Denotes end of header tags
+.Lmb1:

@@ -33,6 +33,7 @@
 #define MULTIBOOT_V2_INFO_END   0
 #define MULTIBOOT_V2_INFO_CMD   1
 #define MULTIBOOT_V2_INFO_MOD   3
+#define MULTIBOOT_V2_INFO_FB    8
 #define MULTIBOOT_V2_INFO_SYS   12
 #define MULTIBOOT_V2_INFO_IMG   20
 #define MULTIBOOT_V2_INFO_KMEM  0x4d454d4b
@@ -46,9 +47,11 @@ class Multiboot final
 {
     public:
         // Multiboot parameters must be in a non-BSS section
-        SEC_DATA static inline uintptr_t cl asm ("multiboot_cl")  { 0 };
-        SEC_DATA static inline uintptr_t ea asm ("multiboot_ea")  { 0 };
-        SEC_DATA static inline uintptr_t ra asm ("multiboot_ra")  { 0 };
+        SEC_DATA static inline uintptr_t cl asm ("multiboot_cl")  { 0 }; // command line
+        SEC_DATA static inline uintptr_t ea asm ("multiboot_ea")  { 0 }; // image end address
+        SEC_DATA static inline uintptr_t ra asm ("multiboot_ra")  { 0 }; // module
+        SEC_DATA static inline uintptr_t fb asm ("multiboot_fb")  { 0 }; // framebuffer
+        SEC_DATA static inline uintptr_t fbp asm ("multiboot_fbp")  { 0 }; // framebuffer pitch
 
         SEC_DATA static inline uintptr_t p0 asm ("multiboot_p0")  { 0 };
         SEC_DATA static inline uintptr_t p1 asm ("multiboot_p1")  { 0 };

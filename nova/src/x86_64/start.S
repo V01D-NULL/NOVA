@@ -158,7 +158,7 @@ __init_bsp:             // Check if we launched via Multiboot v2
                         jmp     .Lmb2_nxt_tag
 .Lmb2_not_img:
                         cmpl    $MULTIBOOT_V2_INFO_KMEM, (%ecx)
-                        jne     .Lmb2_nxt_tag
+                        jne     .Lmb2_not_kmem
                         mov     $0x20000000, %edx
                         sub     $(NOVA_HPAE - LOAD_ADDR), %edx
                         mov     8(%ecx), %eax
@@ -166,6 +166,18 @@ __init_bsp:             // Check if we launched via Multiboot v2
                         cmova   %edx, %eax
                         and     $~OFFS_MASK (1), %eax
                         add     %eax, multiboot_ea - OFFSET(%ebp)
+.Lmb2_not_kmem:
+                        cmpl    $MULTIBOOT_V2_INFO_FB, (%ecx)
+                        jne     .Lmb2_nxt_tag
+                        mov     8(%ecx), %eax      # Address of framebuffer
+                        mov     %eax, multiboot_fb - OFFSET(%ebp)
+                        # mov     12(%ecx), %eax     # Width
+                        # mov     %eax, framebuffer_width - OFFSET(%ebp)
+                        # mov     16(%ecx), %eax     # Height
+                        # mov     %eax, framebuffer_height - OFFSET(%ebp)
+                        mov     20(%ecx), %eax     # Depth
+                        mov     %eax, multiboot_fbp - OFFSET(%ebp)
+                        jmp     .Lmb2_nxt_tag
 .Lmb2_nxt_tag:
                         mov     4(%ecx), %eax
                         lea     7(%ecx,%eax), %ecx
