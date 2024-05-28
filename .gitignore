@@ -5,4 +5,7 @@ iso_root
 limine
 *.o
 *.elf
+*.d
 ovmf
+eclipse/build
+eclipse/test/bin

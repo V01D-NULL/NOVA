@@ -1,4 +1,4 @@
--include Make.conf
+-include Config.mk
 
 .PHONY: all
 all: $(IMAGE_NAME).iso
@@ -49,8 +49,4 @@ $(IMAGE_NAME).iso: hypervisor eclipse
 clean:
 	rm -rf iso_root $(IMAGE_NAME).iso 
 	$(MAKE) -C nova clean RM='rm -rf'
-
-.PHONY: distclean
-distclean: clean
-	rm -rf ovmf
-	$(MAKE) -C nova distclean
+	$(MAKE) -C eclipse clean
